@@ -1,4 +1,4 @@
-// netlify/functions/mark-complete.js
+// netlify/functions/mark-complete.js 
 //
 // A este endpoint lo llama el Google Apps Script del formulario (no el navegador),
 // así que no hace falta configurar CORS.
