@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gracias - Horkion</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    background: "#0d141e",
+                    "on-background": "#dde2f1",
+                    primary: "#e6c182",
+                    "on-primary": "#412d00",
+                    "on-surface-variant": "#d1c5b5",
+                    "outline-variant": "#4d463a"
+                },
+                fontFamily: {
+                    headline: ["Libre Caslon Text"],
+                    body: ["Manrope"]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body { background-color: #0d141e; color: #dde2f1; }
+</style>
+</head>
+<body class="antialiased min-h-screen flex items-center justify-center px-6 text-center">
+<div class="max-w-lg mx-auto">
+<span class="material-symbols-outlined text-primary text-5xl mb-6" style="font-family: 'Material Symbols Outlined';">favorite</span>
+<h1 class="font-headline text-4xl text-primary mb-6">¡Gracias!</h1>
+<p class="font-body text-lg text-on-surface-variant mb-4 leading-relaxed">
+    Recibimos tu solicitud de reserva. Nos pondremos en contacto con vos a la brevedad para confirmar todos los detalles de vuestra ceremonia.
+</p>
+<p class="font-body text-base text-on-surface-variant mb-10 opacity-80">
+    Recordá: la fecha queda reservada de forma definitiva recién cuando te confirmemos por nuestra parte.
+</p>
+<a class="inline-block border border-primary text-primary hover:bg-primary hover:text-on-primary font-body font-bold tracking-wide py-3 px-10 rounded transition-colors" href="/">
+    Volver al inicio
+</a>
+</div>
+</body>
+</html>
