@@ -11,10 +11,10 @@
  */
 
 // Reemplazar por la URL real de tu sitio en Netlify
-const NETLIFY_ENDPOINT = 'https://tu-sitio.netlify.app/.netlify/functions/mark-complete';
+const NETLIFY_ENDPOINT = 'https://horkionceremonias.netlify.app/.netlify/functions/mark-complete';
 
 // Debe coincidir EXACTO con la variable de entorno SHARED_SECRET en Netlify
-const SHARED_SECRET = 'PONÉ_ACÁ_UN_SECRETO_LARGO_Y_ALEATORIO';
+const SHARED_SECRET = 'f4f1d25f7ade7a4e956f947d619d8de628553d6f295f4dda';
 
 // Título exacto de la pregunta oculta donde viaja el token de sesión
 const TOKEN_FIELD_TITLE = 'token_sesion';

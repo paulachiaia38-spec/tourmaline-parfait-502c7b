@@ -1,55 +1,42 @@
 # Cómo activar el flujo de reserva (Google Form → Google Calendar)
 
-## 1. Preparar el Google Form
+**Ya está todo cargado y listo:**
+- Google Form: `1FAIpQLSdWRX6ZYzjHfC_2w82l_2jGh1_tsdVwGW3_-VMIxDj4oWr3tw`
+- Campo token: `entry.1736996056`
+- Agenda de citas de Calendar: ya cargada en `index.html`
+- Sitio Netlify: `https://horkionceremonias.netlify.app`
+- `SHARED_SECRET` ya generado y puesto en `apps-script-form-trigger.gs`
 
-1. Creá (o abrí) el formulario de reserva.
-2. Agregá una pregunta de **Respuesta corta** con el título **exacto**: `token_sesion`.
-   Ponele una aclaración como *"No completar, se llena automáticamente"* y no la marques obligatoria.
-3. (Opcional pero recomendado) Agregá otra pregunta de Respuesta corta llamada **exactamente** `Ceremonia`, así queda registrado cuál eligió la pareja.
-4. Con el formulario abierto: **⋮ → Obtener enlace para prerrellenar**. Completá cualquier texto en `token_sesion` y en `Ceremonia`, generá el enlace y copiá los dos `entry.XXXXXXXXX` que aparecen en la URL generada (uno por cada campo).
-5. Copiá también la URL base del formulario (la que empieza con `https://docs.google.com/forms/d/e/.../viewform`).
+**Lo único que falta hacer vos:**
 
-## 2. Configurar el Google Calendar
+## 1. Subir estos archivos a tu repo de GitHub
+Reemplazá los archivos existentes con los de este ZIP (`index.html`, `netlify.toml`, `package.json`, y agregá la carpeta `netlify/functions/`). Hacé commit y push — Netlify redeploya solo.
 
-1. En Google Calendar, creá una **Página de reserva de citas** (Appointment Schedule) con la disponibilidad que quieras ofrecer.
-2. Abrí "Compartir" → copiá el enlace de reserva. El ID que va después de `/schedules/` es tu `TU_SCHEDULE_ID`.
-
-## 3. Editar `index.html`
-
-Buscá este bloque cerca del final del archivo y reemplazá los 4 valores:
-
-```js
-const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/TU_FORM_ID/viewform';
-const TOKEN_ENTRY_ID = 'entry.111111111';
-const CEREMONIA_ENTRY_ID = 'entry.222222222';
-const CALENDAR_SCHEDULE_URL = 'https://calendar.google.com/calendar/appointments/schedules/TU_SCHEDULE_ID?gv=true';
-```
-
-## 4. Configurar Apps Script (el "avisador")
-
-1. Desde el Google Form: **⋮ → Editor de secuencia de comandos**.
-2. Pegá el contenido de `apps-script-form-trigger.gs` (está en la raíz de este proyecto).
-3. Reemplazá `NETLIFY_ENDPOINT` por `https://TU-SITIO-REAL.netlify.app/.netlify/functions/mark-complete`.
-4. Reemplazá `SHARED_SECRET` por una cadena larga y aleatoria (por ejemplo, generada en https://www.uuidgenerator.net/).
-5. Andá a **Activadores** (ícono de reloj a la izquierda) → **Añadir activador**:
+## 2. Pegar el Apps Script en el Google Form
+1. Desde el Google Form: **⋮ → Apps Script**.
+2. Borrá lo que haya en el editor y pegá TODO el contenido de `apps-script-form-trigger.gs` (ya viene con tu URL y el secreto cargados, no hay que tocar nada).
+3. Guardá (ícono de disquete o Ctrl+S).
+4. A la izquierda, ícono del **reloj (Activadores)** → **Añadir activador**:
    - Función: `onFormSubmit`
-   - Origen del evento: Desde el formulario
-   - Tipo de evento: Al enviarse el formulario
-6. Guardá y autorizá los permisos que pida Google.
+   - Origen del evento: **Desde el formulario**
+   - Tipo de evento: **Al enviarse el formulario**
+5. Guardá. Te va a pedir autorizar permisos de tu cuenta de Google — aceptá.
 
-## 5. Configurar Netlify
+## 3. Agregar la variable de entorno en Netlify
+1. Entrá al dashboard de tu sitio en Netlify → **Site configuration → Environment variables**.
+2. Agregá una variable:
+   - Key: `SHARED_SECRET`
+   - Value: `f4f1d25f7ade7a4e956f947d619d8de628553d6f295f4dda`
+3. Guardá y volvé a desplegar el sitio (Netlify suele pedir un "Trigger deploy" para que tome la nueva variable).
 
-1. En el dashboard de Netlify de tu sitio: **Site settings → Environment variables**.
-2. Agregá `SHARED_SECRET` con el **mismo valor exacto** que pusiste en el Apps Script.
-3. Verificá que el deploy incluya `package.json` (para instalar `@netlify/blobs`) y la carpeta `netlify/functions/`. Netlify las detecta y despliega solas.
-
-## 6. Probar
-
-1. Entrá a tu web, elegí una ceremonia, bajá a "Reserva tu Fecha" y hacé clic en **Completar formulario**.
-2. Completá el formulario y enviálo.
-3. En unos segundos (máximo 3), la web debería desbloquear el calendario automáticamente, sin recargar la página.
+## 4. Probar todo el flujo
+1. Entrá a `https://horkionceremonias.netlify.app`, bajá hasta "Reserva tu Fecha".
+2. Hacé clic en "Completar formulario", llenalo como si fueras un visitante y enviálo.
+3. Volvé a la pestaña de tu web (no hace falta recargar): en unos segundos el calendario debería desbloquearse solo y mostrar tu agenda de citas real.
+4. Elegí un horario de prueba y confirmá — debería aparecer como evento en tu Google Calendar real.
 
 ### Si algo no funciona
-- Revisá en el Google Form que el título del campo oculto sea **exactamente** `token_sesion` (mayúsculas/espacios importan).
-- Mirá los logs de la función en Netlify: **Functions → mark-complete / check-status → ver logs**.
-- Mirá las "Ejecuciones" del Apps Script (ícono de reloj → Ejecuciones) para ver si el POST a Netlify falló.
+- Revisá los logs de la función en Netlify: **Functions → mark-complete → ver logs**.
+- Revisá las "Ejecuciones" del Apps Script (ícono del reloj → Ejecuciones) para ver si el aviso a Netlify falló o dio error de autorización.
+- Confirmá que el `SHARED_SECRET` sea idéntico (sin espacios de más) en Netlify y en el Apps Script.
+
