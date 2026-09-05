@@ -210,29 +210,53 @@
 </section>
 <!-- Booking Section -->
 <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low border-y border-outline-variant/20" id="agenda">
-<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
 <div>
 <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Reserva tu Fecha</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
                         Selecciona el momento sagrado para vuestra ceremonia. Nuestro calendario asegura exclusividad y dedicación total para cada pareja.
                     </p>
-<p class="font-label-caps text-label-caps text-primary" id="agenda-ceremonia-seleccionada">Todavía no elegiste una ceremonia. Elegí una arriba y volvé aquí.</p>
+<p class="font-label-caps text-label-caps text-primary mb-8" id="agenda-ceremonia-seleccionada">Todavía no elegiste una ceremonia. Elegí una arriba y volvé aquí.</p>
 <div class="ritual-divider w-1/2 mx-0"></div>
+<div class="space-y-8 mt-8">
+<div class="flex items-start gap-4">
+<span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-on-primary font-label-caps text-label-caps flex items-center justify-center">1</span>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface mb-1">Completá el formulario</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Contanos los detalles de vuestra ceremonia. Al enviarlo, el calendario se habilita automáticamente, sin que tengas que hacer nada más.</p>
+<button class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps py-3 px-8 rounded-DEFAULT transition-colors" id="btn-abrir-formulario" type="button">
+                                Completar formulario
+                            </button>
 </div>
-<div class="bg-surface border border-outline-variant/30 p-8 rounded-lg shadow-2xl">
-<div class="flex justify-between items-center mb-6 border-b border-outline-variant/30 pb-4">
-<button class="text-primary hover:text-primary-fixed disabled:opacity-30 disabled:cursor-not-allowed" id="btn-mes-anterior" onclick="cambiarMes(-1)" type="button"><span class="material-symbols-outlined">chevron_left</span></button>
-<span class="font-title-lg text-title-lg text-on-surface capitalize" id="calendario-mes-actual"></span>
-<button class="text-primary hover:text-primary-fixed disabled:opacity-30 disabled:cursor-not-allowed" id="btn-mes-siguiente" onclick="cambiarMes(1)" type="button"><span class="material-symbols-outlined">chevron_right</span></button>
 </div>
-<div class="grid grid-cols-7 gap-2 text-center font-label-caps text-label-caps text-on-surface-variant mb-4">
-<div>LU</div><div>MA</div><div>MI</div><div>JU</div><div>VI</div><div>SA</div><div>DO</div>
+<div class="flex items-start gap-4">
+<span class="flex-shrink-0 w-8 h-8 rounded-full border border-outline-variant text-on-surface-variant font-label-caps text-label-caps flex items-center justify-center">2</span>
+<div>
+<h4 class="font-title-lg text-title-lg text-on-surface mb-1">Elegí el día</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Una vez confirmado el formulario, seleccioná la fecha y el horario disponible directamente en el calendario de al lado.</p>
 </div>
-<div class="grid grid-cols-7 gap-2 text-center font-body-md text-body-md" id="calendario-dias"></div>
-<p class="font-label-caps text-label-caps text-on-surface-variant mt-4" id="fecha-seleccionada-texto">Ningún día seleccionado todavía.</p>
-<button class="w-full mt-4 bg-primary text-on-primary font-label-caps text-label-caps py-3 rounded-DEFAULT hover:opacity-90 transition-opacity" id="btn-confirmar-fecha" onclick="confirmarFecha()" type="button">
-                        Confirmar Fecha
-                    </button>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant/30 rounded-lg shadow-2xl overflow-hidden">
+<!-- Estado: bloqueado -->
+<div class="p-10 text-center" id="calendario-locked">
+<span class="material-symbols-outlined text-primary text-4xl mb-4 opacity-60">lock</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Este calendario se habilita automáticamente cuando completás el formulario del Paso 1.</p>
+</div>
+<!-- Estado: esperando confirmación -->
+<div class="hidden p-10 text-center" id="calendario-waiting">
+<div class="mx-auto mb-4 w-8 h-8 border-2 border-outline-variant border-t-primary rounded-full animate-spin"></div>
+<p class="font-label-caps text-label-caps text-primary mb-2">Esperando confirmación del formulario…</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Esto se actualiza solo apenas lo envíes.</p>
+</div>
+<!-- Estado: desbloqueado -->
+<div class="hidden" id="calendario-unlocked">
+<div class="bg-primary text-on-primary font-label-caps text-label-caps py-4 px-6">
+                        ✓ Formulario recibido — elegí día y horario disponible
+                    </div>
+<iframe frameborder="0" id="google-calendar-iframe" style="width:100%; height:600px; display:block; border:0;"></iframe>
+</div>
 </div>
 </div>
 </section>
@@ -245,8 +269,6 @@
 <p class="hidden">
 <label>No completar: <input name="bot-field"/></label>
 </p>
-<input id="input-ceremonia" name="Ceremonia" type="hidden" value=""/>
-<input id="input-fecha" name="Fecha solicitada" type="hidden" value=""/>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
 <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Nombres</label>
@@ -408,110 +430,83 @@
             document.getElementById('agenda').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ---- Calendario dinámico (mes actual + 12 meses hacia adelante) ----
-        const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-        const mesInicial = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-        const mesMaximo = new Date(hoy.getFullYear(), hoy.getMonth() + 11, 1); // 12 meses navegables en total
-        let mesVisible = new Date(mesInicial);
-        let fechaSeleccionada = null;
+        // ---- Google Form + Google Calendar (Paso 1 desbloquea Paso 2) ----
+        // Reemplazar estos 4 valores por los tuyos (ver instrucciones del README interno):
+        const FORM_BASE_URL = 'https://docs.google.com/forms/d/e/TU_FORM_ID/viewform';
+        const TOKEN_ENTRY_ID = 'entry.111111111';       // ID del campo oculto "token_sesion" en el Form
+        const CEREMONIA_ENTRY_ID = 'entry.222222222';   // ID del campo "Ceremonia" en el Form (opcional)
+        const CALENDAR_SCHEDULE_URL = 'https://calendar.google.com/calendar/appointments/schedules/TU_SCHEDULE_ID?gv=true';
+        const POLL_INTERVAL_MS = 3000;
 
-        function cambiarMes(delta) {
-            const nuevoMes = new Date(mesVisible.getFullYear(), mesVisible.getMonth() + delta, 1);
-            if (nuevoMes < mesInicial || nuevoMes > mesMaximo) return;
-            mesVisible = nuevoMes;
-            renderCalendario();
+        function obtenerOCrearToken() {
+            let token = localStorage.getItem('horkion-form-token');
+            if (!token) {
+                token = crypto.randomUUID();
+                localStorage.setItem('horkion-form-token', token);
+            }
+            return token;
         }
 
-        function renderCalendario() {
-            const etiquetaMes = document.getElementById('calendario-mes-actual');
-            etiquetaMes.textContent = MESES[mesVisible.getMonth()] + ' ' + mesVisible.getFullYear();
+        const formToken = obtenerOCrearToken();
+        let pollTimer = null;
 
-            document.getElementById('btn-mes-anterior').disabled = (mesVisible.getFullYear() === mesInicial.getFullYear() && mesVisible.getMonth() === mesInicial.getMonth());
-            document.getElementById('btn-mes-siguiente').disabled = (mesVisible.getFullYear() === mesMaximo.getFullYear() && mesVisible.getMonth() === mesMaximo.getMonth());
+        function mostrarLocked() {
+            document.getElementById('calendario-locked').classList.remove('hidden');
+            document.getElementById('calendario-waiting').classList.add('hidden');
+            document.getElementById('calendario-unlocked').classList.add('hidden');
+        }
 
-            const contenedorDias = document.getElementById('calendario-dias');
-            contenedorDias.innerHTML = '';
+        function mostrarWaiting() {
+            document.getElementById('calendario-locked').classList.add('hidden');
+            document.getElementById('calendario-waiting').classList.remove('hidden');
+            document.getElementById('calendario-unlocked').classList.add('hidden');
+        }
 
-            const primerDiaDelMes = new Date(mesVisible.getFullYear(), mesVisible.getMonth(), 1);
-            const diasEnElMes = new Date(mesVisible.getFullYear(), mesVisible.getMonth() + 1, 0).getDate();
-            // Lunes = 0 ... Domingo = 6
-            const offsetInicial = (primerDiaDelMes.getDay() + 6) % 7;
+        function mostrarUnlocked() {
+            document.getElementById('calendario-locked').classList.add('hidden');
+            document.getElementById('calendario-waiting').classList.add('hidden');
+            document.getElementById('calendario-unlocked').classList.remove('hidden');
 
-            for (let i = 0; i < offsetInicial; i++) {
-                const vacio = document.createElement('div');
-                contenedorDias.appendChild(vacio);
-            }
+            const iframe = document.getElementById('google-calendar-iframe');
+            if (!iframe.src) iframe.src = CALENDAR_SCHEDULE_URL;
 
-            for (let dia = 1; dia <= diasEnElMes; dia++) {
-                const fechaCelda = new Date(mesVisible.getFullYear(), mesVisible.getMonth(), dia);
-                const celda = document.createElement('div');
-                celda.textContent = dia;
+            localStorage.setItem('horkion-form-completado', 'true');
+            if (pollTimer) clearInterval(pollTimer);
+        }
 
-                const esPasado = fechaCelda < hoy;
-                const esSeleccionada = fechaSeleccionada && fechaCelda.getTime() === fechaSeleccionada.getTime();
-
-                if (esPasado) {
-                    celda.className = 'py-2 rounded text-surface-variant cursor-not-allowed';
-                } else if (esSeleccionada) {
-                    celda.className = 'py-2 bg-primary text-on-primary rounded font-bold shadow-[0_0_10px_rgba(230,193,130,0.5)] cursor-pointer';
-                } else {
-                    celda.className = 'py-2 hover:bg-primary/20 rounded cursor-pointer text-on-surface';
-                    celda.addEventListener('click', () => {
-                        fechaSeleccionada = fechaCelda;
-                        renderCalendario();
-                        actualizarTextoFecha();
-                    });
-                }
-
-                contenedorDias.appendChild(celda);
+        async function chequearEstadoFormulario() {
+            try {
+                const res = await fetch('/.netlify/functions/check-status?token=' + encodeURIComponent(formToken));
+                const data = await res.json();
+                if (data.completed) mostrarUnlocked();
+            } catch (err) {
+                console.error('Error consultando estado del formulario:', err);
             }
         }
 
-        function actualizarTextoFecha() {
-            const texto = document.getElementById('fecha-seleccionada-texto');
-            if (!fechaSeleccionada) {
-                texto.textContent = 'Ningún día seleccionado todavía.';
-                return;
-            }
-            const dd = String(fechaSeleccionada.getDate()).padStart(2, '0');
-            const mm = MESES[fechaSeleccionada.getMonth()];
-            const yyyy = fechaSeleccionada.getFullYear();
-            texto.textContent = 'Fecha seleccionada: ' + dd + ' de ' + mm + ' de ' + yyyy;
+        function iniciarPolling() {
+            chequearEstadoFormulario();
+            pollTimer = setInterval(chequearEstadoFormulario, POLL_INTERVAL_MS);
         }
 
-        renderCalendario();
-
-        // ---- Confirmar reserva ----
-        function confirmarFecha() {
-            if (!ceremoniaSeleccionada) {
-                alert('Por favor, elegí primero una ceremonia en la sección "Selecciona tu Ceremonia".');
-                document.getElementById('rituales').scrollIntoView({ behavior: 'smooth' });
-                return;
+        document.getElementById('btn-abrir-formulario').addEventListener('click', () => {
+            const params = new URLSearchParams();
+            params.set('usp', 'pp_url');
+            params.set(TOKEN_ENTRY_ID, formToken);
+            if (ceremoniaSeleccionada) {
+                params.set(CEREMONIA_ENTRY_ID, ceremoniaSeleccionada);
             }
-            if (!fechaSeleccionada) {
-                alert('Por favor, elegí un día en el calendario.');
-                return;
-            }
+            window.open(FORM_BASE_URL + '?' + params.toString(), '_blank', 'noopener');
+            mostrarWaiting();
+            iniciarPolling();
+        });
 
-            const dd = String(fechaSeleccionada.getDate()).padStart(2, '0');
-            const mm = MESES[fechaSeleccionada.getMonth()];
-            const yyyy = fechaSeleccionada.getFullYear();
-            const resumen = 'Quiero reservar la ceremonia "' + ceremoniaSeleccionada + '" para el día ' + dd + ' de ' + mm + ' de ' + yyyy + '.';
-
-            // Precarga los datos en el formulario de contacto/reserva para que confirmen el pedido
-            const inputCeremonia = document.getElementById('input-ceremonia');
-            const inputFecha = document.getElementById('input-fecha');
-            const mensajeInput = document.querySelector('#contacto textarea');
-            if (inputCeremonia) inputCeremonia.value = ceremoniaSeleccionada;
-            if (inputFecha) inputFecha.value = dd + ' de ' + mm + ' de ' + yyyy;
-            if (mensajeInput) {
-                mensajeInput.value = resumen;
-            }
-
-            alert('¡Listo! Preseleccionaste "' + ceremoniaSeleccionada + '" para el ' + dd + ' de ' + mm + ' de ' + yyyy + '. Completá tus datos abajo y enviá el formulario para que te confirmemos la reserva.');
-            document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+        // Estado inicial al cargar la página
+        if (localStorage.getItem('horkion-form-completado') === 'true') {
+            mostrarUnlocked();
+        } else {
+            mostrarLocked();
+            iniciarPolling(); // por si ya completó el form antes y vuelve a entrar
         }
     </script>
 <script>
