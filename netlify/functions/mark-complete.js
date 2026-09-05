@@ -1,4 +1,4 @@
-// netlify/functions/mark-complete.js 
+// netlify/functions/mark-complete.js
 //
 // A este endpoint lo llama el Google Apps Script del formulario (no el navegador),
 // así que no hace falta configurar CORS.
@@ -33,7 +33,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Missing token' };
   }
 
-  const store = getStore('form-tokens');
+  const store = getStore({
+    name: 'form-tokens',
+    siteID: process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_BLOBS_TOKEN,
+  });
 
   await store.setJSON(token, {
     completed: true,
