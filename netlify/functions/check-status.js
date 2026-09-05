@@ -16,7 +16,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing token' }) };
   }
 
-  const store = getStore('form-tokens');
+  const store = getStore({
+    name: 'form-tokens',
+    siteID: process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_BLOBS_TOKEN,
+  });
   const data = await store.get(token, { type: 'json' });
 
   return {
