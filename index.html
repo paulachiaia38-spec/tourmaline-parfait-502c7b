@@ -251,7 +251,7 @@
 <p class="font-body-md text-body-md text-on-surface-variant">Esto se actualiza solo apenas lo envíes.</p>
 </div>
 <!-- Estado: desbloqueado -->
-<div class="hidden bg-white" id="calendario-unlocked">
+<div class="hidden" id="calendario-unlocked">
 <div class="bg-primary text-on-primary font-label-caps text-label-caps py-4 px-6">
                         ✓ Formulario recibido — elegí día y horario disponible
                     </div>
@@ -446,10 +446,10 @@
             calEmbedCargado = true;
             Cal.ns["reserva-ceremonia"]("inline", {
                 elementOrSelector: "#my-cal-inline-reserva-ceremonia",
-                config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+                config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true", "theme":"dark"},
                 calLink: "horkion/reservaceremonia",
             });
-            Cal.ns["reserva-ceremonia"]("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#e6c182"}},"hideEventTypeDetails":false,"layout":"month_view"});
+            Cal.ns["reserva-ceremonia"]("ui", {"theme":"dark","cssVarsPerTheme":{"dark":{"cal-brand":"#e6c182"}},"hideEventTypeDetails":false,"layout":"month_view"});
         }
         const POLL_INTERVAL_MS = 3000;
 
