@@ -523,36 +523,65 @@ Enviar Testimonio
 </div>
 </section>
 <!-- Contact Section -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-3xl mx-auto text-center" id="contacto">
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto" id="contacto">
+<div class="text-center">
 <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Contacto</h2>
 <p class="font-body-md text-body-md text-on-surface-variant mb-8">Iniciemos el diálogo sobre vuestro compromiso.</p>
-<div class="flex flex-wrap justify-center gap-4 mb-12" id="canales-contacto">
-<!-- Estos botones aparecen solos apenas Horkion complete WHATSAPP_NUMBER / INSTAGRAM_HANDLE / CONTACT_EMAIL en el script -->
+<div class="flex flex-wrap justify-center gap-4 mb-12" id="canales-contacto"></div>
 </div>
-<form action="/gracias.html" class="space-y-6 text-left" data-netlify-honeypot="bot-field" data-netlify="true" id="form-reserva" method="POST" name="reserva-horkion">
-<input name="form-name" type="hidden" value="reserva-horkion"/>
-<p class="hidden">
-<label>No completar: <input name="bot-field"/></label>
-</p>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div>
-<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Nombres</label>
-<input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Nombres" required="" type="text"/>
+<form action="/gracias.html" class="text-left" data-netlify-honeypot="bot-field" data-netlify="true" id="form-contacto" method="POST" name="contacto-horkion">
+<input name="form-name" type="hidden" value="contacto-horkion"/>
+<p class="hidden"><label>No completar: <input name="bot-field"/></label></p>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Completá los datos de tu ceremonia. Podés dejar en blanco lo que todavía no sepas y lo vemos juntos en la reunión.</p>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">1. Datos generales del evento</h3>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Fecha del evento</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Fecha_evento" type="date"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Organizadora</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Organizadora" type="text"/></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Lugar</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Lugar" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Contacto (WhatsApp o correo)</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Contacto" type="text" required=""/></div></div>
+<div><p class="font-body-md text-body-md text-on-surface-variant opacity-80 text-sm mb-2">Solo si la ceremonia se suma a un casamiento civil.</p><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Casamiento por civil (si corresponde): fecha y lugar</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Casamiento_civil" type="text"/></div>
 </div>
-<div>
-<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Correo Electrónico</label>
-<input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Email" required="" type="email"/>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">2. De los novios y horarios</h3>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Nombres completos y apellidos de la novia</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Novia_nombre_completo" type="text" required=""/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Nombres completos y apellidos del novio</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Novio_nombre_completo" type="text" required=""/></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Convocatoria de invitados (hora)</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Hora_convocatoria" type="time"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Ingreso de los novios (hora)</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Hora_ingreso" type="time"/></div></div>
 </div>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">3. Testigos</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">La cantidad de testigos es a elección. Sugerimos un máximo de 3 por contrayente para una mayor dinámica de la ceremonia. Detallá nombre completo y apodo.</p>
+<div class="space-y-6">
+<p class="font-label-caps text-label-caps text-primary">Testigos de la novia</p>
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">1. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novia_1" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">2. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novia_2" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">3. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novia_3" type="text"/></div>
+<p class="font-label-caps text-label-caps text-primary mt-4">Testigos del novio</p>
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">1. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novio_1" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">2. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novio_2" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">3. Nombre y apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Testigo_novio_3" type="text"/></div>
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">¿Quieren que los testigos pronuncien unas palabras para ustedes?</label><div class="flex flex-wrap gap-6"><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Testigos_palabras" type="radio" value="Sí"/>Sí</label><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Testigos_palabras" type="radio" value="No"/>No</label></div></div>
 </div>
-<div>
-<label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Mensaje o Dudas</label>
-<textarea class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Mensaje" rows="4"></textarea>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">4. Oradores adicionales</h3>
+<div class="space-y-6">
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">¿Quieren que en la ceremonia simbólica hable otra persona?</label><div class="flex flex-wrap gap-6"><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Orador_adicional" type="radio" value="Sí"/>Sí</label><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Orador_adicional" type="radio" value="No"/>No</label></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Nombre</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Orador_nombre" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Apellido</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Orador_apellido" type="text"/></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Parentesco</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Orador_parentesco" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Orador_apodo" type="text"/></div></div>
 </div>
-<div class="text-center">
-<button class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps py-3 px-12 rounded-DEFAULT transition-colors" type="submit">
-Enviar Mensaje
-</button>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">5. Alianzas y votos</h3>
+<div class="space-y-6">
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Anillos: ¿los entregan ustedes o prefieren que lo haga un familiar?</label><div class="flex flex-wrap gap-6"><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Anillos" type="radio" value="Entre nosotros"/>Entre nosotros</label><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Anillos" type="radio" value="Familiar"/>Familiar</label></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Familiar: nombre y apellido</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Anillos_familiar_nombre" type="text"/></div><div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">Familiar: parentesco o apodo</label><input class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Anillos_familiar_parentesco" type="text"/></div></div>
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">¿Quieren intercambiar votos?</label><div class="flex flex-wrap gap-6"><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Votos" type="radio" value="Sí"/>Sí</label><label class="flex items-center gap-2 text-on-surface-variant"><input class="text-primary focus:ring-primary" name="Votos" type="radio" value="No"/>No</label></div></div>
 </div>
+
+<h3 class="font-title-lg text-title-lg text-primary border-b border-outline-variant/30 pb-2 mt-10 mb-6 text-left">6. Observaciones</h3>
+<div class="space-y-6">
+<div><label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">¿Algún otro detalle les gustaría agregar?</label><textarea class="w-full bg-surface-container border border-outline-variant text-on-surface rounded focus:border-primary focus:ring-1 focus:ring-primary p-3 transition-colors" name="Observaciones" rows="3"></textarea></div>
+<label class="flex items-center gap-2 text-on-surface-variant"><input class="rounded text-primary focus:ring-primary" name="Conversar_proxima_reunion" type="checkbox" value="Sí"/>A conversar en la próxima reunión</label>
+</div>
+
+<div class="text-center mt-10">
+<button class="border border-primary text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps py-3 px-12 rounded-DEFAULT transition-colors" id="btn-enviar-contacto" type="submit">Enviar formulario</button>
+</div>
+<p class="hidden font-body-md text-body-md text-primary text-center mt-4" id="form-contacto-error">Hubo un problema al enviar el formulario. Revisá la conexión e intentá de nuevo.</p>
+<p class="hidden font-body-md text-body-md text-primary text-center mt-4" id="form-contacto-ok">¡Gracias! Recibimos tu formulario y te vamos a contactar para coordinar tu ceremonia.</p>
 </form>
 </section>
 </main>
@@ -813,6 +842,33 @@ errorAgenda.classList.remove('hidden');
 }
 if (localStorage.getItem('horkion-datos-enviados') === 'true') {
 desbloquearCalendario();
+}
+
+
+// ---- Formulario de contacto (Netlify, envío sin salir de la página) ----
+const formContacto = document.getElementById('form-contacto');
+if (formContacto) {
+formContacto.addEventListener('submit', async (e) => {
+e.preventDefault();
+const btn = document.getElementById('btn-enviar-contacto');
+const errorC = document.getElementById('form-contacto-error');
+const okC = document.getElementById('form-contacto-ok');
+errorC.classList.add('hidden');
+btn.disabled = true;
+btn.textContent = 'Enviando...';
+const datos = new URLSearchParams(new FormData(formContacto)).toString();
+try {
+const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: datos });
+if (!res.ok) throw new Error('HTTP ' + res.status);
+formContacto.classList.add('hidden');
+okC.classList.remove('hidden');
+} catch (err) {
+console.error('Error enviando formulario de contacto:', err);
+errorC.classList.remove('hidden');
+btn.disabled = false;
+btn.textContent = 'Enviar formulario';
+}
+});
 }
 
 // ---- Validación simple de zona en el formulario de Agenda ----
